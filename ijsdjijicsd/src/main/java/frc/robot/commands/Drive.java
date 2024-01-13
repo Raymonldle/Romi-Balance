@@ -4,28 +4,24 @@
 
 package frc.robot.commands;
 
-import frc.robot.subsystems.RomiDrivetrain;
-import frc.robot.subsystems.RomiGyro;
-import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.subsystems.RomiDrivetrain;
 
 /** An example command that uses an example subsystem. */
-public class Balance extends CommandBase {
+public class Drive extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private final RomiDrivetrain m_drivebase;
-  private final RomiGyro m_RomiGyro;
-  PIDController m_PIDController = new PIDController(0, 0, 0);
-  private boolean isDetected;
+  private final XboxController m_xboxController; 
 
   /**
    * Creates a new ExampleCommand.
    *
    * @param subsystem The subsystem used by this command.
    */
-  public Balance(RomiDrivetrain m_drivebase, RomiGyro m_RomiGyro) {
+  public Drive(RomiDrivetrain m_drivebase, XboxController m_xboxController) {
     this.m_drivebase = m_drivebase;
-    this.m_RomiGyro = m_RomiGyro;
-  
+    this.m_xboxController = m_xboxController;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(m_drivebase);
   }
@@ -33,22 +29,20 @@ public class Balance extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-      m_drivebase.resetEncoders();
+    m_drivebase.resetEncoders();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-      if(isDetected){
-        m_drivebase.arcadeDrive(m_PIDController.calculate(m_RomiGyro.getAngleY(),0),m_PIDController.calculate(m_RomiGyro.getAngleZ(),0));
-      }
+    m_drivebase.arcadeDrive(m_xboxController.getLeftY(), m_xboxController.getRightX());
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-      m_drivebase.arcadeDrive(0 , 0);
-  } 
+    m_drivebase.arcadeDrive(0, 0);
+  }
 
   // Returns true when the command should end.
   @Override

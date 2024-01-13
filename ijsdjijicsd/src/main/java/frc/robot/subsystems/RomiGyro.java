@@ -1,5 +1,7 @@
 
+package frc.robot.subsystems;
 import edu.wpi.first.hal.SimDevice;
+
 import edu.wpi.first.hal.SimDevice.Direction;
 import edu.wpi.first.wpilibj.interfaces.Gyro;
 import edu.wpi.first.hal.SimDouble;
