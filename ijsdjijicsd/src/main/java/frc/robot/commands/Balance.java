@@ -15,7 +15,7 @@ public class Balance extends CommandBase {
   private final RomiDrivetrain m_drivebase;
   private final RomiGyro m_RomiGyro;
   PIDController m_PIDController = new PIDController(0, 0, 0);
-  private boolean isDetected;
+  private boolean isDetected = false;
 
   /**
    * Creates a new ExampleCommand.
@@ -39,7 +39,7 @@ public class Balance extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-      if(isDetected){
+      if(((m_RomiGyro.getAngleX() > 0) || (m_RomiGyro.getAngleX() < 0))){
         m_drivebase.arcadeDrive(m_PIDController.calculate(m_RomiGyro.getAngleX(),0),m_PIDController.calculate(m_RomiGyro.getAngleZ(),0));
       }
   }
