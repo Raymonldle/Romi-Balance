@@ -40,7 +40,7 @@ public class Balance extends CommandBase {
   @Override
   public void execute() {
       if(isDetected){
-        m_drivebase.arcadeDrive(m_PIDController.calculate(m_RomiGyro.getAngleY(),0),m_PIDController.calculate(m_RomiGyro.getAngleZ(),0));
+        m_drivebase.arcadeDrive(m_PIDController.calculate(m_RomiGyro.getAngleX(),0),m_PIDController.calculate(m_RomiGyro.getAngleZ(),0));
       }
   }
 
@@ -53,6 +53,6 @@ public class Balance extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return (m_RomiGyro.getAngleY() && m_RomiGyro.getAngleZ() >= 0);
+    return ((m_RomiGyro.getAngleX() == 0 ) && (m_RomiGyro.getAngleZ() == 0));
   }
 }
